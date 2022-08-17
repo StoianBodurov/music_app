@@ -12,3 +12,5 @@ class AlbumModel(db.Model):
     artist = db.Column(db.String(30), nullable=False)
     genre = db.Column(db.String(20), nullable=False)
     description = db.Column(db.String(200), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('UserModel')

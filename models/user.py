@@ -10,3 +10,5 @@ class UserModel(db.Model):
     email = db.Column(db.String(100), nullable=False, unique=True)
     phone = db.Column(db.String(15), nullable=False)
     password = db.Column(db.String(255), nullable=False)
+    album = db.relationship('AlbumModel', backref='album', lazy='dynamic')
+
