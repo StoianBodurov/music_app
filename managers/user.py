@@ -9,6 +9,9 @@ from models import UserModel
 class UserManager:
     @staticmethod
     def register(user_data):
+        if UserModel.query.filter_by(email=user_data['email']).first():
+            raise BadRequest('User already exist')
+
         user_data['password'] = generate_password_hash(user_data['password'], method='sha256')
         user = UserModel(**user_data)
         try:
@@ -27,4 +30,3 @@ class UserManager:
             raise Exception
         except Exception:
             raise BadRequest('Invalid username or password')
-        

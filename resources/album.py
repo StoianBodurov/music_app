@@ -3,7 +3,9 @@ from flask_restful import Resource
 
 from managers.album import AlbumManager
 from managers.auth import auth
+from schemas.request.album import RequestAlbumSchema
 from schemas.response.album import ResponseAlbumSchema
+from utils.decorators import validate_schema
 
 
 class GetAllAlbumList(Resource):
@@ -15,17 +17,18 @@ class GetAllAlbumList(Resource):
 class GetUserAlbumList(Resource):
     @auth.login_required
     def get(self):
-        user_id = auth.current_user()
-        albums = AlbumManager.get_all_album(user_id=user_id)
+        user = auth.current_user()
+        albums = AlbumManager.get_all_album(user=user)
         return ResponseAlbumSchema().dump(albums, many=True)
 
 
 class CreateAlbum(Resource):
     @auth.login_required
+    @validate_schema(RequestAlbumSchema)
     def post(self):
         data = request.get_json()
         user = auth.current_user()
-        album = AlbumManager.add_album(data, user.id)
+        album = AlbumManager.add_album(data, user)
         return ResponseAlbumSchema().dump(album)
 
 

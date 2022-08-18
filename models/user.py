@@ -11,4 +11,3 @@ class UserModel(db.Model):
     phone = db.Column(db.String(15), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     album = db.relationship('AlbumModel', backref='album', lazy='dynamic')
-
