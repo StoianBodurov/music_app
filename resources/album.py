@@ -32,21 +32,18 @@ class CreateAlbum(Resource):
         return ResponseAlbumSchema().dump(album)
 
 
-class GetAlbum(Resource):
+class AlbumManagement(Resource):
     def get(self, pk):
         album = AlbumManager.get_album(pk)
         return ResponseAlbumSchema().dump(album)
 
-
-class UpdateAlbum(Resource):
     @auth.login_required
+    @validate_schema(RequestAlbumSchema)
     def put(self, pk):
         data = request.get_json()
         album = AlbumManager.update_album(data, pk)
         return ResponseAlbumSchema().dump(album)
 
-
-class DeleteAlbum(Resource):
     @auth.login_required
     def delete(self, pk):
         return AlbumManager.delete_album(pk)

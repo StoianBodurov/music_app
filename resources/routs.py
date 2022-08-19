@@ -1,4 +1,4 @@
-from resources.album import GetAllAlbumList, GetUserAlbumList, GetAlbum, UpdateAlbum, DeleteAlbum, CreateAlbum
+from resources.album import GetAllAlbumList, GetUserAlbumList, AlbumManagement, CreateAlbum
 from resources.auth import RegisterUser, LoginUser
 
 routes = (
@@ -7,7 +7,5 @@ routes = (
     (GetAllAlbumList, '/'),
     (GetUserAlbumList, '/user'),
     (CreateAlbum, '/album/create'),
-    (GetAlbum, '/album/<int:pk>'),
-    (UpdateAlbum, '/album/<int:pk>/update'),
-    (DeleteAlbum, '/album/<int:pk>/delete'),
+    (AlbumManagement, '/album/<int:pk>'),
 )
