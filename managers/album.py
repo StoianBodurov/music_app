@@ -6,14 +6,14 @@ from models import AlbumModel
 
 class AlbumManager:
     @staticmethod
-    def get_all_album(user=None):
-        if user:
-            return AlbumModel.query.filter_by(user_id=user.id)
+    def get_all_album(user_id=None):
+        if user_id:
+            return AlbumModel.query.filter_by(user_id=user_id)
         return AlbumModel.query.all()
 
     @staticmethod
-    def add_album(data, user):
-        data['user_id'] = user.id
+    def add_album(data, user_id):
+        data['user_id'] = user_id
         album = AlbumModel(**data)
         db.session.add(album)
         db.session.flush()

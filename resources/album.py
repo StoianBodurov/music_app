@@ -18,7 +18,7 @@ class GetUserAlbumList(Resource):
     @auth.login_required
     def get(self):
         user = auth.current_user()
-        albums = AlbumManager.get_all_album(user=user)
+        albums = AlbumManager.get_all_album(user_id=user.id)
         return ResponseAlbumSchema().dump(albums, many=True)
 
 
@@ -28,7 +28,7 @@ class CreateAlbum(Resource):
     def post(self):
         data = request.get_json()
         user = auth.current_user()
-        album = AlbumManager.add_album(data, user)
+        album = AlbumManager.add_album(data, user.id)
         return ResponseAlbumSchema().dump(album)
 
 

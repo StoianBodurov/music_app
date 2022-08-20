@@ -20,3 +20,4 @@ class LoginUser(Resource):
         data = request.get_json()
         token = UserManager.login(data)
         return {'token': token}
+

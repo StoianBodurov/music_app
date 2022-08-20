@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from db import db
 from managers.auth import AuthManager
-from models import UserModel
+from models import UserModel, RoleType
 
 
 class UserManager:
@@ -30,3 +30,15 @@ class UserManager:
             raise Exception
         except Exception:
             raise BadRequest('Invalid username or password')
+
+    @staticmethod
+    def create_admin(data):
+        data['password'] = generate_password_hash(data['password'], method='sha256')
+        data['role'] = RoleType.admin
+        admin = UserModel(**data)
+        try:
+            db.session.add(admin)
+            db.session.flush()
+        except Exception as ex:
+            raise BadRequest(str(ex))
+

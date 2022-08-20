@@ -14,3 +14,4 @@ class AlbumModel(db.Model):
     description = db.Column(db.String(200), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('UserModel')
+    song = db.relationship('SongModel', backref='song', lazy='dynamic')
