@@ -28,7 +28,7 @@ class CreateAlbum(Resource):
     def post(self):
         data = request.get_json()
         user = auth.current_user()
-        album = AlbumManager.add_album(data, user.id)
+        album = AlbumManager.create_album(data, user.id)
         return ResponseAlbumSchema().dump(album)
 
 

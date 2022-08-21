@@ -33,6 +33,9 @@ class UserManager:
 
     @staticmethod
     def create_admin(data):
+        if UserModel.query.filter_by(email=data['email']).first():
+            raise BadRequest('User already exist')
+
         data['password'] = generate_password_hash(data['password'], method='sha256')
         data['role'] = RoleType.admin
         admin = UserModel(**data)

@@ -14,3 +14,7 @@ class RegisterUserSchema(UserSchema):
 
 class LoginUserSchema(UserSchema):
     pass
+
+
+class RegisterAdminSchema(RegisterUserSchema):
+    pass
