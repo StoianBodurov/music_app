@@ -8,16 +8,16 @@ from utils.managers_helpers import delete_item, update_item, get_item
 class SongManager:
     @staticmethod
     def get_songs_in_album(pk):
-        return SongModel.query.filter_by(album_pk=pk)
+        return SongModel.query.filter_by(album_id=pk)
 
     @staticmethod
     def create_song(data, album_id):
-        if AlbumModel.query.filter_by(id=album_id).first():
+        if not AlbumModel.query.filter_by(id=album_id).first():
             raise NotFound('Album not exist')
 
         data['album_id'] = album_id
         song = SongModel(**data)
-        db.session.commit(song)
+        db.session.add(song)
         db.session.flush()
         return song
 

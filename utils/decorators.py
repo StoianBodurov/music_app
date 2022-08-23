@@ -29,5 +29,7 @@ def permission_required(role):
             if not current_user.role == role:
                 raise Forbidden("You don't have permissions ")
             return function(*args, **kwargs)
+
         return wrapper
+
     return decorated

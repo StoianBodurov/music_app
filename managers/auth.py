@@ -12,7 +12,7 @@ class AuthManager:
     @staticmethod
     def encode_token(user):
         payload = {
-            'sub': (user.id, user.role.value),
+            'sub': user.id,
             'exp': datetime.utcnow() + timedelta(hours=2)
         }
         return jwt.encode(payload, key=config("SECRET_KEY"), algorithm='HS256')
@@ -21,7 +21,7 @@ class AuthManager:
     def decode_token(token):
         try:
             data = jwt.decode(jwt=token, key=config("SECRET_KEY"), algorithms=['HS256'])
-            return {'user_id': data['sub'][0], 'user_role': data['sub'][1]}
+            return data['sub']
         except Exception as ex:
             raise ex
 
@@ -33,7 +33,7 @@ auth = HTTPTokenAuth(scheme='Bearer')
 def verify_token(token):
     try:
         token = AuthManager.decode_token(token)
-        return UserModel.query.filter_by(id=token['user_id']).first()
+        return UserModel.query.filter_by(id=token).first()
     except Exception:
         raise Unauthorized('Invalid or missing token')
     

@@ -11,7 +11,7 @@ routes = (
     (CreateAlbum, '/album/create'),
     (AlbumManagement, '/album/<int:pk>'),
     (GetAlbumSongList, '/album/<int:album_id>/songs'),
-    (CreateSong, '/album/<int:album_id>/song/create'),
+    (CreateSong, '/album/<int:album_id>/songs/create'),
     (SongManagement, '/songs/<int:pk>'),
     (CreateAdmin, '/admin/create'),
 )

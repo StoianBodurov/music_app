@@ -44,4 +44,3 @@ class UserManager:
             db.session.flush()
         except Exception as ex:
             raise BadRequest(str(ex))
-
