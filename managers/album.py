@@ -5,7 +5,8 @@ from werkzeug.exceptions import NotFound
 
 from constant import TEMP_FILE_DIR
 from db import db
-from models import AlbumModel
+from managers.song import SongManager
+from models import AlbumModel, SongModel
 from services.s3 import S3Service
 from utils.helpers import decode_photo
 from utils.managers_helpers import delete_item, update_item, get_item
@@ -73,7 +74,9 @@ class AlbumManager:
         album = AlbumModel.query.filter_by(id=pk).first()
         if not album:
             raise NotFound('Item not exist')
+        songs = SongModel.query.filter_by(album_id=album.id)
         file_name = album.img_url.split('/')[-1]
+        [SongManager.delete_song(song.id) for song in songs]
         delete_item(AlbumModel, pk)
         s3.delete_photo(file_name)
 

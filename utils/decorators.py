@@ -27,7 +27,7 @@ def permission_required(role):
         def wrapper(*args, **kwargs):
             current_user = auth.current_user()
             if not current_user.role == role:
-                raise Forbidden("You don't have permissions ")
+                raise Forbidden('You don\'t have permission')
             return function(*args, **kwargs)
 
         return wrapper

@@ -1,0 +1,44 @@
+from random import randint
+
+import factory
+
+from db import db
+from models import AlbumModel, RoleType, UserModel
+
+
+class BaseFactory(factory.Factory):
+    @classmethod
+    def create(cls, **kwargs):
+        object = super().create(**kwargs)
+        db.session.add(object)
+        db.session.flush()
+        return object
+
+
+class UserFactory(BaseFactory):
+    class Meta:
+        model = UserModel
+
+    id = factory.Sequence(lambda n: n)
+    first_name = factory.Faker('first_name')
+    last_name = factory.Faker('last_name')
+    email = factory.Faker('email')
+    phone = str(randint(100000, 200000))
+    password = factory.Faker('password')
+    role = RoleType.user
+
+
+class AlbumFactory(BaseFactory):
+    class Meta:
+        model = AlbumModel
+
+    id = factory.Sequence(lambda n: n)
+    name = factory.Faker('name')
+    img_url = factory.Faker('uuuhjbkjasbck')
+    price = factory.Faker('12.5')
+    release_date = factory.Faker('12/12/1999')
+    artist = factory.Faker('artist')
+    genre = factory.Faker('genre')
+    description = factory.Faker('description')
+    user_id = factory.Faker('1')
+
